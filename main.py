@@ -1,27 +1,35 @@
+# main.py
+
 from nutrition_analyzer import NutritionAnalyzer
 from activity_tracker import ActivityTracker
 from recommender import RecommenderEngine
+from utils import load_sample_input, pretty_print_dict
 
 def main():
-    # Simulated input
-    food_log = ["Rice", "Dal", "Chicken", "Banana"]
-    steps = 6000
-    workouts = 3
+    # Step 1: Load sample user data
+    input_data = load_sample_input()
 
-    print("\n Analyzing your input...")
-    
-    # Analyze diet
+    if not input_data:
+        print(" No input data found. Please check sample_input.json")
+        return
+
+    food_log = input_data.get("food_log", [])
+    steps = input_data.get("steps", 0)
+    workouts = input_data.get("workouts", 0)
+
+    print("\n Analyzing your lifestyle input...")
+
+    # Step 2: Nutrition Analysis
     nutrition = NutritionAnalyzer().analyze(food_log)
-    print(f" Nutrition: {nutrition}")
+    pretty_print_dict(nutrition, "Nutrition Summary")
 
-    # Analyze activity
+    # Step 3: Activity Analysis
     activity = ActivityTracker().analyze(steps, workouts)
-    print(f" Activity: {activity}")
+    pretty_print_dict(activity, "Activity Summary")
 
-    # Get recommendations
+    # Step 4: Personalized Recommendation
     recommendation = RecommenderEngine().recommend(nutrition, activity)
-    print(f"\n Recommendation: {recommendation}")
+    print(f"\n Final Recommendation:\n {recommendation}")
 
 if __name__ == "__main__":
     main()
-
