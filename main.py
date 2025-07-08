@@ -1,4 +1,3 @@
-# main.py
 
 from nutrition_analyzer import NutritionAnalyzer
 from activity_tracker import ActivityTracker
